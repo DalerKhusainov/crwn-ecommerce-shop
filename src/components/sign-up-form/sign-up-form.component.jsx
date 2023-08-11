@@ -41,7 +41,7 @@ const SignUpForm = () => {
   };
 
   // SUBMIT HANDLER
-  const submitHandler = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -73,7 +73,7 @@ const SignUpForm = () => {
     <div className="sign-up-container">
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSubmit}>
         <FormInput
           label="Display name"
           type="text"
