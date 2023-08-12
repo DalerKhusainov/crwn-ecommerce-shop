@@ -6,6 +6,8 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -25,6 +27,7 @@ googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
+/////////////////////////////////////////////////////////////////////////////////////
 // FIREBASE AUTH INITIALIZINGS
 export const auth = getAuth();
 export const signInWithGooglePopup = () =>
@@ -32,9 +35,11 @@ export const signInWithGooglePopup = () =>
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
+/////////////////////////////////////////////////////////////////////////////////////
 // FIREBASE FIRESTORE INITIALIZINGS
 export const db = getFirestore();
 
+/////////////////////////////////////////////////////////////////////////////////////
 // CREATING DATABASE DOCUMENT FOR CURRENT USER IF HE OR SHE DOES NOT EXIST
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -66,6 +71,7 @@ export const createUserDocumentFromAuth = async (
   return userDocRef;
 };
 
+/////////////////////////////////////////////////////////////////////////////////////
 // FUNC FOR CREATING ATHENTICATION OF A USER WITH EMAIL
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   // IF WE DON'T GET EMAIL OR PASSWORD ARGUMENTS WE DON'T RUN OUR FUNCTION
@@ -75,6 +81,7 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
+/////////////////////////////////////////////////////////////////////////////////////
 // FUNC FOR SIGNING A USER WITH EMAIL AND PASSWORD
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   // IF WE DON'T GET EMAIL OR PASSWORD ARGUMENTS WE DON'T RUN OUR FUNCTION
@@ -83,3 +90,16 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   // IF EMAIL OR PASSOWRD HAVE VALUE THAN INITIALIZE THE AUTHENTICATION
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+/////////////////////////////////////////////////////////////////////////////////////
+// FUNC FOR SIGNING OUT A USER
+// NOTE: auth IS ALSO KEEPING TRACK OF WHAT USERS ARE SIGNED IN RIGHT NOW
+export const signOutUser = async () => await signOut(auth);
+
+/////////////////////////////////////////////////////////////////////////////////////
+// CREATING OBSERVER LISTENER
+// WHAT OBSERVER DOES IS IT RETURNS YOU BACK WHATEVER YOU GET BACK FROM ON OFF STATE CHANGED
+// IN ORDER FOR ONAUTHSTATECHANGED TO WORK. IT TAKES TWO PARAMETERS
+// 1. AUTH SINGLETON. 2. CALLBACK WHICH WE WANT TO CALL EVERY TIME AUTH STATE CHANGES
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);

@@ -34,9 +34,7 @@ const SignInForm = () => {
 
   // SIGN IN WITH GOOGLE HANDLER
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-    console.log("Click");
+    await signInWithGooglePopup();
   };
 
   // SIGN UP HHNDLER
@@ -51,11 +49,10 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
 
       // RESET FORM FIELDS STATE
       resetFormFields();
