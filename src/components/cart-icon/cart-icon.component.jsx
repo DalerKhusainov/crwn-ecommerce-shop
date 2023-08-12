@@ -9,7 +9,7 @@ import { CartContext } from "../../contexts/cart.context";
 
 const CartIcon = () => {
   // GETTING VALUES AND FUNCS FROM CARTCONTEXT API
-  const { isCartOpen, setIsCartOpen } = useContext(CartContext);
+  const { isCartOpen, setIsCartOpen, cartCount } = useContext(CartContext);
 
   return (
     <div
@@ -17,7 +17,7 @@ const CartIcon = () => {
       className="cart-icon-container"
     >
       <ShoppingIcon className="shopping-icon" />
-      <span className="item-count">10</span>
+      <span className="item-count">{cartCount}</span>
     </div>
   );
 };
